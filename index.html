@@ -3,10 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Высеченный шрифт – наскальный стиль</title>
-    <!-- Шрифты: монументальные, каменные -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Playfair+Display+SC:wght@700&family=Staatliches&family=Russo+One&display=swap" rel="stylesheet">
+    <title>AI-заключения о кандидатах ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Marck+Script&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg: #1e1b2e;
+            --shadow-dark: #15121f;
+            --shadow-light: #2b2540;
+            --text: #d9d0f0;
+            --accent: #f0a8c0;   /* нежный розовый */
+            --radius: 30px;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -14,163 +23,509 @@
         }
 
         body {
-            background: #1c1c1c;
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(145deg, #2a2440 0%, #15121f 100%);
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
-            padding: 2rem;
-            font-family: 'Segoe UI', sans-serif;
-            color: #ccc;
-        }
-
-        h2 {
-            font-weight: 300;
-            margin-bottom: 1rem;
-            color: #aaa;
-            letter-spacing: 2px;
-        }
-
-        .example {
-            width: 100%;
-            max-width: 800px;
-            margin: 1.5rem 0;
-            padding: 2rem;
-            border-radius: 12px;
-            background: rgba(0,0,0,0.4);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-            text-align: center;
-        }
-
-        .example p {
-            font-size: clamp(2rem, 8vw, 4rem);
-            font-weight: 700;
-            line-height: 1.2;
-            margin: 0;
-            letter-spacing: 2px;
-        }
-
-        /* 1. Высеченный / вдавленный (inset) – из палитры LUNA (#023859 и т.д.) */
-        .engraved-luna {
-            font-family: 'Cinzel Decorative', serif;
-            color: #011C40;
-            background: #A7EBF2;
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow:
-                -1px -1px 1px rgba(255,255,255,0.3),
-                2px 2px 4px rgba(0,0,0,0.6),
-                inset 0 0 10px #023859;
-            /* Имитация внутренней тени через дублирование слоя */
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
             position: relative;
         }
-        .engraved-luna::before {
-            content: attr(data-text);
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: -20%;
+            left: -10%;
+            width: 60%;
+            height: 80%;
+            background: radial-gradient(circle at 30% 40%, rgba(240, 168, 192, 0.15) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -15%;
+            right: -5%;
+            width: 70%;
+            height: 70%;
+            background: radial-gradient(circle at 70% 60%, rgba(139, 157, 195, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        #dissolve-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            display: none;
+        }
+
+        .slides-container {
+            position: relative;
+            width: 95%;
+            max-width: none;
+            height: 90vh;
+            max-height: none;
+            z-index: 1;
+        }
+
+        .slide {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            color: #023859;
-            -webkit-text-fill-color: #023859;
-            text-shadow: 0 0 0 transparent;
-            background: none;
-            -webkit-background-clip: unset;
-            z-index: -1;
-            transform: translate(1px, 2px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border-radius: var(--radius);
+            background: var(--slide-bg, var(--bg));
+            box-shadow: 18px 18px 36px var(--shadow-dark),
+                        -18px -18px 36px var(--shadow-light);
+            transition: opacity 0.3s ease;
+            visibility: hidden;
+            opacity: 0;
+            padding: 40px;
+            color: var(--text);
+            overflow-y: auto;
         }
 
-        /* 2. Выпуклый (emboss) – палитра Gradient green (#051F20 -> #8EB69B) */
-        .emboss-green {
-            font-family: 'Playfair Display SC', serif;
-            color: #8EB69B;
-            text-shadow:
-                2px 2px 0 #051F20,
-                4px 4px 0 #0B2B26,
-                6px 6px 0 #163832;
-            letter-spacing: 4px;
+        .slide.active {
+            visibility: visible;
+            opacity: 1;
         }
 
-        /* 3. Гравировка на тёмном камне – палитра 1b0d0b76... (#80917D, #134B42, #EEA83B) */
-        .stone-cut {
-            font-family: 'Staatliches', sans-serif;
-            color: #EEA83B;
-            text-shadow:
-                1px 1px 0 #134B42,
-                2px 2px 0 #80917D,
-                3px 3px 0 #CA763B,
-                6px 6px 10px rgba(0,0,0,0.7);
-            letter-spacing: 6px;
-            text-transform: uppercase;
+        /* Каллиграфический шрифт для заголовков */
+        .slide h1, .slide h2, .handwritten, .step-card h3 {
+            font-family: 'Marck Script', cursive;
+            font-weight: 400;
         }
 
-        /* 4. Наскальный, вдавленный (двойная тень) – смешанная палитра */
-        .cave-inset {
-            font-family: 'Russo One', sans-serif;
-            color: #A7EBF2;
-            text-shadow:
-                -2px -2px 2px rgba(0,0,0,0.5),
-                2px 2px 0 #011C40,
-                4px 4px 0 #023859;
-            background: linear-gradient(180deg, #26658C 0%, #54ACBF 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            /* поверх градиента тени для глубины */
-        }
-
-        /* 5. Монолитный вырез – контрастная палитра (Product look) */
-        .monolith {
-            font-family: 'Cinzel Decorative', serif;
-            color: #F4FF46;
-            text-shadow:
-                0 2px 0 #E6OE, /* имитация скошенного края */
-                0 -2px 0 #COEAF5,
-                2px 4px 10px black;
-            background: #2E2E2E;
-            display: inline-block;
-            padding: 0.2em 0.5em;
-            border-radius: 8px;
-            box-shadow: inset 0 2px 4px rgba(255,255,255,0.2), 0 6px 10px black;
-        }
-
-        /* Подпись под примером */
-        .palette-note {
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-            color: #888;
+        .slide h1 {
+            font-size: 4.2em;
+            margin-bottom: 20px;
+            color: #fff;
             letter-spacing: 1px;
+            line-height: 1.2;
+        }
+
+        .slide h2 {
+            font-size: 2.8em;
+            margin-bottom: 20px;
+            color: #f0eaff;
+        }
+
+        .slide p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            max-width: 600px;
+            color: #cbc3e8;
+        }
+
+        /* Вдавленный блок — эффект высеченного текста */
+        .inset-box {
+            background: var(--slide-bg, var(--bg));
+            border-radius: 25px;
+            padding: 20px 30px;
+            margin: 20px 0;
+            box-shadow: inset 8px 8px 16px var(--shadow-dark),
+                        inset -8px -8px 16px var(--shadow-light);
+            max-width: 600px;
+            font-size: 1.2em;
+        }
+        .inset-box p {
+            text-shadow: 0 1px 0 rgba(0,0,0,0.5), 0 -1px 0 rgba(255,255,255,0.1);
+        }
+
+        .step-card {
+            background: var(--slide-bg, var(--bg));
+            border-radius: 25px;
+            padding: 25px 35px;
+            margin: 20px auto;
+            max-width: 650px;
+            box-shadow: 12px 12px 24px var(--shadow-dark),
+                        -12px -12px 24px var(--shadow-light);
+            text-align: left;
+            font-size: 1.1em;
+            color: #d9d0f0;
+            line-height: 1.5;
+        }
+
+        .step-card h3 {
+            font-size: 2.4em;
+            margin-bottom: 15px;
+            color: #f0a8c0;
+        }
+
+        .project-link {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 12px 30px;
+            background: var(--bg);
+            border-radius: 40px;
+            box-shadow: 8px 8px 16px var(--shadow-dark),
+                        -8px -8px 16px var(--shadow-light);
+            color: #f0a8c0;
+            text-decoration: none;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            word-break: break-word;
+        }
+
+        .project-link:hover {
+            box-shadow: inset 6px 6px 12px var(--shadow-dark),
+                        inset -6px -6px 12px var(--shadow-light);
+            color: #fff;
+        }
+
+        /* Карточки команды */
+        .team-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 25px;
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        .team-card {
+            background: var(--slide-bg, var(--bg));
+            border-radius: 25px;
+            padding: 30px 25px 25px;
+            width: 180px;
+            box-shadow: 12px 12px 24px var(--shadow-dark),
+                        -12px -12px 24px var(--shadow-light);
+            text-align: center;
+            transition: transform 0.2s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .team-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: inset 3px 3px 6px var(--shadow-dark),
+                        inset -3px -3px 6px var(--shadow-light),
+                        0 8px 16px rgba(0,0,0,0.3);
+            margin-bottom: 18px;
+            background: #2b2540;
+        }
+
+        .team-name {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #f0eaff;
+            margin-bottom: 6px;
+            text-decoration: none;
+            display: inline-block;
+            transition: color 0.2s ease, text-shadow 0.2s ease;
+            cursor: pointer;
+        }
+
+        .team-name:hover {
+            color: #f0a8c0;
+            text-shadow: 0 0 12px rgba(240, 168, 192, 0.6);
+        }
+
+        .team-role {
+            font-size: 0.95em;
+            color: #a98bff;
+            line-height: 1.4;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 30px;
+            z-index: 999;
+        }
+
+        .btn {
+            background: var(--bg);
+            border: none;
+            border-radius: 50px;
+            padding: 15px 35px;
+            font-size: 1.1em;
+            color: var(--text);
+            box-shadow: 8px 8px 16px var(--shadow-dark),
+                        -8px -8px 16px var(--shadow-light);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+            letter-spacing: 0.5px;
+        }
+
+        .btn:active {
+            box-shadow: inset 6px 6px 12px var(--shadow-dark),
+                        inset -6px -6px 12px var(--shadow-light);
+        }
+
+        .indicator {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--accent);
+            font-size: 0.9em;
+            z-index: 999;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 600px) {
+            .slide h1 { font-size: 2.8em; }
+            .slide h2 { font-size: 2em; }
+            .step-card h3 { font-size: 1.8em; }
+            .team-card { width: 130px; padding: 15px; }
+            .team-photo { width: 70px; height: 70px; }
         }
     </style>
 </head>
 <body>
-    <h2>Высеченный шрифт — наскальный, монолитный</h2>
 
-    <div class="example">
-        <p class="engraved-luna" data-text="ВЫСЕЧЕНО">ВЫСЕЧЕНО</p>
-        <p class="palette-note">Вдавленный стиль (палитра LUNA: #A7EBF2, #023859, #011C40)</p>
+    <canvas id="dissolve-canvas"></canvas>
+
+    <div class="slides-container">
+        <!-- 1. Титульный слайд -->
+        <div class="slide active" id="slide0" style="--slide-bg: #1e1b2e;">
+            <h1>AI-заключения о кандидатах</h1>
+            <div class="inset-box">
+                <p>Автоматические выводы на основе резюме,<br>тестов и видеоинтервью — быстро, объективно, глубоко.</p>
+            </div>
+        </div>
+
+        <!-- 2. Проблема -->
+        <div class="slide" id="slide1" style="--slide-bg: #231f35;">
+            <h2>Проблема HR сегодня</h2>
+            <div class="step-card">
+                <p>• Сотни резюме на одну вакансию</p>
+                <p>• Ручная оценка занимает часы</p>
+                <p>• Субъективность и усталость рекрутера</p>
+                <p>• Упущенные таланты из‑за скорости отбора</p>
+            </div>
+        </div>
+
+        <!-- 3. Решение -->
+        <div class="slide" id="slide2" style="--slide-bg: #1e1b2e;">
+            <h2>Наше решение</h2>
+            <div class="step-card">
+                <h3>AI-ассистент заключений</h3>
+                <p>Система анализирует все данные кандидата и формирует готовое заключение с баллами, сильными сторонами и рекомендациями для найма.</p>
+            </div>
+        </div>
+
+        <!-- 4. Как это работает -->
+        <div class="slide" id="slide3" style="--slide-bg: #28223e;">
+            <h2>Как это работает</h2>
+            <div class="step-card">
+                <p>1. Загрузка резюме, тестов, видео</p>
+                <p>2. AI извлекает навыки, опыт, компетенции</p>
+                <p>3. Сравнение с требованиями вакансии</p>
+                <p>4. Генерация текстового заключения + баллы</p>
+                <p>5. Отправка HR-менеджеру в личный кабинет</p>
+            </div>
+        </div>
+
+        <!-- 5. Преимущества -->
+        <div class="slide" id="slide4" style="--slide-bg: #1e1b2e;">
+            <h2>Преимущества</h2>
+            <div class="step-card">
+                <p>✔ Сокращение времени обработки на 80%</p>
+                <p>✔ Объективность и единые стандарты оценки</p>
+                <p>✔ Выявление скрытых талантов</p>
+                <p>✔ Интеграция с любыми ATS</p>
+            </div>
+        </div>
+
+        <!-- 6. Пример заключения -->
+        <div class="slide" id="slide5" style="--slide-bg: #231f35;">
+            <h2>Пример заключения</h2>
+            <div class="inset-box" style="text-align:left; max-width:550px;">
+                <p><strong>Кандидат:</strong> Анна И.</p>
+                <p><strong>Вакансия:</strong> Senior Python Developer</p>
+                <p><strong>Общий балл:</strong> 87/100</p>
+                <p><strong>Сильные стороны:</strong> 5 лет опыта, экспертиза в FastAPI, опыт командной разработки.</p>
+                <p><strong>Рекомендация:</strong> Пригласить на техническое интервью.</p>
+            </div>
+        </div>
+
+        <!-- 7. Призыв к действию -->
+        <div class="slide" id="slide6" style="--slide-bg: #28223e;">
+            <h2>Готовы попробовать?</h2>
+            <div class="inset-box">
+                <p>Подключите AI‑заключения и сократите время найма вдвое.</p>
+            </div>
+            <a href="https://amusing-nexus-work-flow.base44.app" target="_blank" class="project-link">
+                Открыть демо
+            </a>
+        </div>
+
+        <!-- 8. Команда -->
+        <div class="slide" id="slide7" style="--slide-bg: #231f35;">
+            <h2>Команда проекта</h2>
+            <div class="team-grid">
+                <div class="team-card">
+                    <img src="ilyas.jpg" alt="Ильяс" class="team-photo">
+                    <a href="https://github.com/onlymyrep" target="_blank" class="team-name">Ильяс</a>
+                    <div class="team-role">Технический лид</div>
+                </div>
+                <div class="team-card">
+                    <img src="anna.jpg" alt="Анна" class="team-photo">
+                    <a href="https://github.com/apich16" target="_blank" class="team-name">Анна</a>
+                    <div class="team-role">ML-инженер</div>
+                </div>
+                <div class="team-card">
+                    <img src="alsinya.jpg" alt="Алсиня" class="team-photo">
+                    <a href="https://github.com/Alsva6" target="_blank" class="team-name">Алсиня</a>
+                    <div class="team-role">Специалист по компьютерному зрению</div>
+                </div>
+                <div class="team-card">
+                    <img src="rasilya.jpg" alt="Расиля" class="team-photo">
+                    <a href="https://github.com/rasilya" target="_blank" class="team-name">Расиля</a>
+                    <div class="team-role">Продукт-менеджер</div>
+                </div>
+                <div class="team-card">
+                    <img src="polina.jpg" alt="Полина" class="team-photo">
+                    <a href="https://github.com/pllinss" target="_blank" class="team-name">Полина</a>
+                    <div class="team-role">Бизнес-аналитик</div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="example">
-        <p class="emboss-green">ВПЕЧАТАН</p>
-        <p class="palette-note">Выпуклый / тиснение (зелёный градиент: #051F20 → #8EB69B)</p>
+    <div class="indicator" id="indicator">Слайд 1 / 8</div>
+    <div class="controls">
+        <button class="btn" id="prevBtn">← Назад</button>
+        <button class="btn" id="nextBtn">Вперёд →</button>
     </div>
 
-    <div class="example">
-        <p class="stone-cut">НА СКАЛЕ</p>
-        <p class="palette-note">Гравировка на камне (палитра: #EEA83B, #134B42, #80917D)</p>
-    </div>
+    <script>
+        (function() {
+            const slides = document.querySelectorAll('.slide');
+            const totalSlides = slides.length;
+            let currentIndex = 0;
+            const canvas = document.getElementById('dissolve-canvas');
+            const ctx = canvas.getContext('2d');
+            const indicator = document.getElementById('indicator');
+            let isAnimating = false;
 
-    <div class="example">
-        <p class="cave-inset">ГЛУБИНА</p>
-        <p class="palette-note">Наскальный вдавленный (LUNA: #A7EBF2, #26658C, #023859)</p>
-    </div>
+            const particleColors = [
+                '#1e1b2e', '#15121f', '#2b2540', '#f0a8c0', '#d9d0f0', '#f0eaff', '#8b9dc3', '#cbc3e8', '#28223e', '#231f35'
+            ];
 
-    <div class="example">
-        <p class="monolith">МОНОЛИТ</p>
-        <p class="palette-note">Монолитный блок с вырезом (Product look palette)</p>
-    </div>
+            function updateIndicator() {
+                indicator.textContent = `Слайд ${currentIndex + 1} / ${totalSlides}`;
+            }
+
+            function dissolveToNext(targetIndex) {
+                if (isAnimating || targetIndex === currentIndex) return;
+                if (targetIndex < 0 || targetIndex >= totalSlides) return;
+
+                isAnimating = true;
+
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                canvas.style.display = 'block';
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                const cx = canvas.width / 2;
+                const cy = canvas.height / 2;
+                const particles = [];
+                const count = 3000;
+
+                for (let i = 0; i < count; i++) {
+                    const angle = Math.random() * Math.PI * 2;
+                    const speed = 2 + Math.random() * 8;
+                    const color = particleColors[Math.floor(Math.random() * particleColors.length)];
+                    const size = 2 + Math.random() * 6;
+                    particles.push({
+                        x: cx + (Math.random() - 0.5) * 200,
+                        y: cy + (Math.random() - 0.5) * 100,
+                        vx: Math.cos(angle) * speed,
+                        vy: Math.sin(angle) * speed,
+                        life: 1,
+                        decay: 0.01 + Math.random() * 0.03,
+                        color: color,
+                        size: size
+                    });
+                }
+
+                slides[currentIndex].classList.remove('active');
+                slides[targetIndex].classList.add('active');
+
+                function animate() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    let alive = false;
+                    particles.forEach(p => {
+                        p.x += p.vx;
+                        p.y += p.vy;
+                        p.life -= p.decay;
+                        if (p.life > 0) {
+                            alive = true;
+                            ctx.globalAlpha = p.life;
+                            ctx.fillStyle = p.color;
+                            ctx.fillRect(p.x, p.y, p.size, p.size);
+                        }
+                    });
+                    if (alive) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        canvas.style.display = 'none';
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        currentIndex = targetIndex;
+                        updateIndicator();
+                        isAnimating = false;
+                    }
+                }
+                animate();
+            }
+
+            document.getElementById('nextBtn').addEventListener('click', () => dissolveToNext(currentIndex + 1));
+            document.getElementById('prevBtn').addEventListener('click', () => dissolveToNext(currentIndex - 1));
+
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight' || e.key === 'Right' || e.key === ' ') {
+                    e.preventDefault();
+                    dissolveToNext(currentIndex + 1);
+                } else if (e.key === 'ArrowLeft' || e.key === 'Left') {
+                    e.preventDefault();
+                    dissolveToNext(currentIndex - 1);
+                }
+            });
+
+            let touchStartX = 0;
+            window.addEventListener('touchstart', (e) => {
+                touchStartX = e.touches[0].clientX;
+            }, {passive: true});
+            window.addEventListener('touchend', (e) => {
+                const diff = e.changedTouches[0].clientX - touchStartX;
+                if (Math.abs(diff) > 50) {
+                    if (diff < 0) dissolveToNext(currentIndex + 1);
+                    else dissolveToNext(currentIndex - 1);
+                }
+            });
+
+            updateIndicator();
+        })();
+    </script>
 </body>
 </html>
