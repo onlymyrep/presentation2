@@ -46,10 +46,10 @@
 
         .slides-container {
             position: relative;
-            width: 90%;
-            max-width: 900px;
-            height: 70%;
-            max-height: 600px;
+            width: 95%;               /* было 90%  – растянет по горизонтали */
+            max-width: none;          /* убираем ограничение 900px */
+            height: 90vh;             /* было 70% / max-height 600px – теперь 90% высоты окна */
+            max-height: none;         /* убираем ограничение 600px */
         }
 
         .slide {
