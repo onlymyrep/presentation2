@@ -3,19 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI-заключения о кандидатах ✨</title>
+    <title>AI‑заключения – каменная презентация 🪨</title>
     <link href="https://fonts.googleapis.com/css2?family=Marck+Script&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg: #1e1b2e;
-            --shadow-dark: #15121f;
-            --shadow-light: #2b2540;
-            --text: #d9d0f0;
-            --accent: #f0a8c0;   /* нежный розовый */
-            --radius: 30px;
-        }
-
+        /* Общие сбросы и базовые стили */
         * {
             margin: 0;
             padding: 0;
@@ -24,7 +16,6 @@
 
         body {
             font-family: 'Nunito', sans-serif;
-            background: linear-gradient(145deg, #2a2440 0%, #15121f 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -33,31 +24,11 @@
             user-select: none;
             -webkit-tap-highlight-color: transparent;
             position: relative;
+            background: #1c1c1c; /* фолбэк */
+            transition: background 0.5s ease;
         }
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: -20%;
-            left: -10%;
-            width: 60%;
-            height: 80%;
-            background: radial-gradient(circle at 30% 40%, rgba(240, 168, 192, 0.15) 0%, transparent 60%);
-            pointer-events: none;
-            z-index: 0;
-        }
-        body::after {
-            content: '';
-            position: fixed;
-            bottom: -15%;
-            right: -5%;
-            width: 70%;
-            height: 70%;
-            background: radial-gradient(circle at 70% 60%, rgba(139, 157, 195, 0.08) 0%, transparent 60%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
+        /* Каждый слайд задаст свой фон через переменные */
         #dissolve-canvas {
             position: fixed;
             top: 0;
@@ -72,9 +43,9 @@
         .slides-container {
             position: relative;
             width: 95%;
-            max-width: none;
+            max-width: 960px;
             height: 90vh;
-            max-height: none;
+            max-height: 800px;
             z-index: 1;
         }
 
@@ -89,16 +60,13 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            border-radius: var(--radius);
-            background: var(--slide-bg, var(--bg));
-            box-shadow: 18px 18px 36px var(--shadow-dark),
-                        -18px -18px 36px var(--shadow-light);
-            transition: opacity 0.3s ease;
+            border-radius: 30px;
+            padding: 40px;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
             visibility: hidden;
             opacity: 0;
-            padding: 40px;
-            color: var(--text);
-            overflow-y: auto;
+            color: #fff;
+            /* Фон каждого слайда будет определяться палитрой */
         }
 
         .slide.active {
@@ -107,147 +75,81 @@
         }
 
         /* Каллиграфический шрифт для заголовков */
-        .slide h1, .slide h2, .handwritten, .step-card h3 {
+        .slide h1, .slide h2, .slide .engraved {
             font-family: 'Marck Script', cursive;
             font-weight: 400;
+            letter-spacing: 2px;
         }
 
         .slide h1 {
-            font-size: 4.2em;
+            font-size: 4.5em;
             margin-bottom: 20px;
-            color: #fff;
-            letter-spacing: 1px;
             line-height: 1.2;
         }
 
         .slide h2 {
-            font-size: 2.8em;
-            margin-bottom: 20px;
-            color: #f0eaff;
+            font-size: 3em;
+            margin-bottom: 25px;
         }
 
-        .slide p {
-            font-size: 1.2em;
+        .slide p, .slide li {
+            font-size: 1.3em;
             line-height: 1.6;
             max-width: 600px;
-            color: #cbc3e8;
         }
 
-        /* Вдавленный блок — эффект высеченного текста */
-        .inset-box {
-            background: var(--slide-bg, var(--bg));
-            border-radius: 25px;
-            padding: 20px 30px;
-            margin: 20px 0;
-            box-shadow: inset 8px 8px 16px var(--shadow-dark),
-                        inset -8px -8px 16px var(--shadow-light);
-            max-width: 600px;
-            font-size: 1.2em;
-        }
-        .inset-box p {
-            text-shadow: 0 1px 0 rgba(0,0,0,0.5), 0 -1px 0 rgba(255,255,255,0.1);
-        }
-
-        .step-card {
-            background: var(--slide-bg, var(--bg));
-            border-radius: 25px;
-            padding: 25px 35px;
+        /* Карточки контента */
+        .card {
+            background: rgba(0,0,0,0.25);
+            border-radius: 24px;
+            padding: 30px;
             margin: 20px auto;
             max-width: 650px;
-            box-shadow: 12px 12px 24px var(--shadow-dark),
-                        -12px -12px 24px var(--shadow-light);
-            text-align: left;
-            font-size: 1.1em;
-            color: #d9d0f0;
-            line-height: 1.5;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
         }
 
-        .step-card h3 {
-            font-size: 2.4em;
-            margin-bottom: 15px;
-            color: #f0a8c0;
-        }
-
-        .project-link {
-            display: inline-block;
-            margin-top: 25px;
-            padding: 12px 30px;
-            background: var(--bg);
-            border-radius: 40px;
-            box-shadow: 8px 8px 16px var(--shadow-dark),
-                        -8px -8px 16px var(--shadow-light);
-            color: #f0a8c0;
-            text-decoration: none;
-            font-size: 1.1em;
-            font-weight: 600;
-            transition: all 0.2s ease;
-            word-break: break-word;
-        }
-
-        .project-link:hover {
-            box-shadow: inset 6px 6px 12px var(--shadow-dark),
-                        inset -6px -6px 12px var(--shadow-light);
-            color: #fff;
-        }
-
-        /* Карточки команды */
+        /* Стили командного блока */
         .team-grid {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 30px;
+            gap: 25px;
             margin-top: 25px;
-            width: 100%;
-            max-width: 1100px;
         }
 
         .team-card {
-            background: var(--slide-bg, var(--bg));
-            border-radius: 25px;
-            padding: 30px 25px 25px;
-            width: 180px;
-            box-shadow: 12px 12px 24px var(--shadow-dark),
-                        -12px -12px 24px var(--shadow-light);
+            background: rgba(0,0,0,0.3);
+            border-radius: 20px;
+            padding: 20px;
+            width: 160px;
+            backdrop-filter: blur(4px);
             text-align: center;
-            transition: transform 0.2s ease;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+            transition: transform 0.2s;
         }
-
         .team-card:hover {
-            transform: translateY(-4px);
+            transform: translateY(-6px);
         }
-
         .team-photo {
-            width: 120px;
-            height: 120px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
             object-fit: cover;
-            box-shadow: inset 3px 3px 6px var(--shadow-dark),
-                        inset -3px -3px 6px var(--shadow-light),
-                        0 8px 16px rgba(0,0,0,0.3);
-            margin-bottom: 18px;
-            background: #2b2540;
+            border: 3px solid rgba(255,255,255,0.2);
+            margin-bottom: 10px;
         }
-
         .team-name {
-            font-size: 1.3em;
+            font-size: 1.2em;
             font-weight: 700;
-            color: #f0eaff;
-            margin-bottom: 6px;
+            color: #fff;
             text-decoration: none;
             display: inline-block;
-            transition: color 0.2s ease, text-shadow 0.2s ease;
-            cursor: pointer;
+            margin-bottom: 4px;
         }
-
-        .team-name:hover {
-            color: #f0a8c0;
-            text-shadow: 0 0 12px rgba(240, 168, 192, 0.6);
-        }
-
         .team-role {
-            font-size: 0.95em;
-            color: #a98bff;
-            line-height: 1.4;
+            font-size: 0.9em;
+            color: #ccc;
         }
 
         .controls {
@@ -256,46 +158,43 @@
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 30px;
+            gap: 25px;
             z-index: 999;
         }
 
         .btn {
-            background: var(--bg);
-            border: none;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
             border-radius: 50px;
-            padding: 15px 35px;
-            font-size: 1.1em;
-            color: var(--text);
-            box-shadow: 8px 8px 16px var(--shadow-dark),
-                        -8px -8px 16px var(--shadow-light);
+            padding: 14px 30px;
+            font-size: 1em;
+            color: #fff;
+            backdrop-filter: blur(10px);
             cursor: pointer;
-            transition: all 0.2s ease;
-            font-family: inherit;
+            transition: all 0.2s;
             letter-spacing: 0.5px;
         }
-
         .btn:active {
-            box-shadow: inset 6px 6px 12px var(--shadow-dark),
-                        inset -6px -6px 12px var(--shadow-light);
+            background: rgba(255,255,255,0.2);
         }
 
         .indicator {
             position: fixed;
-            bottom: 100px;
+            bottom: 95px;
             left: 50%;
             transform: translateX(-50%);
-            color: var(--accent);
+            color: #fff;
             font-size: 0.9em;
             z-index: 999;
-            opacity: 0.8;
+            opacity: 0.7;
         }
 
+        /* Медиа-адаптив */
         @media (max-width: 600px) {
-            .slide h1 { font-size: 2.8em; }
-            .slide h2 { font-size: 2em; }
-            .step-card h3 { font-size: 1.8em; }
-            .team-card { width: 130px; padding: 15px; }
+            .slide h1 { font-size: 3em; }
+            .slide h2 { font-size: 2.2em; }
+            .card { padding: 20px; }
+            .team-card { width: 130px; }
             .team-photo { width: 70px; height: 70px; }
         }
     </style>
@@ -305,83 +204,111 @@
     <canvas id="dissolve-canvas"></canvas>
 
     <div class="slides-container">
-        <!-- 1. Титульный слайд -->
-        <div class="slide active" id="slide0" style="--slide-bg: #1e1b2e;">
-            <h1>AI-заключения о кандидатах</h1>
-            <div class="inset-box">
-                <p>Автоматические выводы на основе резюме,<br>тестов и видеоинтервью — быстро, объективно, глубоко.</p>
+        <!-- Слайд 0: Вступление (палитра Gradient green) -->
+        <div class="slide active" id="slide0" style="background: linear-gradient(135deg, #051F20, #235347);">
+            <h1 style="color: #8EB69B; text-shadow: 2px 2px 0 #051F20, 4px 4px 0 #163832, 6px 6px 10px black;">
+                AI‑заключения о кандидатах
+            </h1>
+            <div class="card">
+                <p style="color: #8EB69B; text-shadow: 1px 1px 0 #051F20;">
+                    Автоматические выводы на основе резюме, тестов и видеоинтервью — быстро, объективно, глубоко.
+                </p>
             </div>
         </div>
 
-        <!-- 2. Проблема -->
-        <div class="slide" id="slide1" style="--slide-bg: #231f35;">
-            <h2>Проблема HR сегодня</h2>
-            <div class="step-card">
-                <p>• Сотни резюме на одну вакансию</p>
-                <p>• Ручная оценка занимает часы</p>
-                <p>• Субъективность и усталость рекрутера</p>
-                <p>• Упущенные таланты из‑за скорости отбора</p>
+        <!-- Слайд 1: Проблема (палитра LUNA) -->
+        <div class="slide" id="slide1" style="background: linear-gradient(145deg, #011C40, #023859);">
+            <h2 style="color: #A7EBF2; text-shadow: -1px -1px 0 #023859, 3px 3px 0 #011C40, 6px 6px 12px black;">
+                Проблема HR сегодня
+            </h2>
+            <div class="card">
+                <ul style="list-style: none; color: #A7EBF2; text-shadow: 1px 1px 0 #011C40;">
+                    <li>• Сотни резюме на одну вакансию</li>
+                    <li>• Ручная оценка занимает часы</li>
+                    <li>• Субъективность и усталость рекрутера</li>
+                    <li>• Упущенные таланты из‑за скорости отбора</li>
+                </ul>
             </div>
         </div>
 
-        <!-- 3. Решение -->
-        <div class="slide" id="slide2" style="--slide-bg: #1e1b2e;">
-            <h2>Наше решение</h2>
-            <div class="step-card">
-                <h3>AI-ассистент заключений</h3>
-                <p>Система анализирует все данные кандидата и формирует готовое заключение с баллами, сильными сторонами и рекомендациями для найма.</p>
+        <!-- Слайд 2: Наше решение (палитра 1b0d0b76... землистая) -->
+        <div class="slide" id="slide2" style="background: linear-gradient(145deg, #134B42, #80917D);">
+            <h2 style="color: #EEA83B; text-shadow: 2px 2px 0 #134B42, 4px 4px 0 #CA763B, 8px 8px 12px black;">
+                Наше решение
+            </h2>
+            <div class="card">
+                <p style="color: #EEA83B; text-shadow: 1px 1px 0 #134B42;">
+                    AI‑ассистент анализирует все данные кандидата и формирует готовое заключение с баллами, сильными сторонами и рекомендациями.
+                </p>
             </div>
         </div>
 
-        <!-- 4. Как это работает -->
-        <div class="slide" id="slide3" style="--slide-bg: #28223e;">
-            <h2>Как это работает</h2>
-            <div class="step-card">
-                <p>1. Загрузка резюме, тестов, видео</p>
-                <p>2. AI извлекает навыки, опыт, компетенции</p>
-                <p>3. Сравнение с требованиями вакансии</p>
-                <p>4. Генерация текстового заключения + баллы</p>
-                <p>5. Отправка HR-менеджеру в личный кабинет</p>
+        <!-- Слайд 3: Как это работает (палитра Product look – жёлтый акцент) -->
+        <div class="slide" id="slide3" style="background: #2E2E2E; box-shadow: inset 0 0 30px rgba(0,0,0,0.8);">
+            <h2 style="color: #F4FF46; text-shadow: 0 2px 0 #000, 2px 4px 10px black;">
+                Как это работает
+            </h2>
+            <div class="card" style="background: rgba(255,255,255,0.05);">
+                <ol style="text-align: left; color: #F4FF46; text-shadow: 1px 1px 0 #000; line-height: 2;">
+                    <li>Загрузка резюме, тестов, видео</li>
+                    <li>AI извлекает навыки, опыт, компетенции</li>
+                    <li>Сравнение с требованиями вакансии</li>
+                    <li>Генерация текстового заключения + баллы</li>
+                    <li>Отправка HR-менеджеру в личный кабинет</li>
+                </ol>
             </div>
         </div>
 
-        <!-- 5. Преимущества -->
-        <div class="slide" id="slide4" style="--slide-bg: #1e1b2e;">
-            <h2>Преимущества</h2>
-            <div class="step-card">
-                <p>✔ Сокращение времени обработки на 80%</p>
-                <p>✔ Объективность и единые стандарты оценки</p>
-                <p>✔ Выявление скрытых талантов</p>
-                <p>✔ Интеграция с любыми ATS</p>
+        <!-- Слайд 4: Преимущества (снова зелёный градиент) -->
+        <div class="slide" id="slide4" style="background: linear-gradient(145deg, #0B2B26, #163832);">
+            <h2 style="color: #8EB69B; text-shadow: 2px 2px 0 #051F20, 4px 4px 0 #0B2B26, 6px 6px 10px black;">
+                Преимущества
+            </h2>
+            <div class="card">
+                <ul style="list-style: none; color: #8EB69B; text-shadow: 1px 1px 0 #051F20;">
+                    <li>✔ Сокращение времени обработки на 80%</li>
+                    <li>✔ Объективность и единые стандарты</li>
+                    <li>✔ Выявление скрытых талантов</li>
+                    <li>✔ Интеграция с любыми ATS</li>
+                </ul>
             </div>
         </div>
 
-        <!-- 6. Пример заключения -->
-        <div class="slide" id="slide5" style="--slide-bg: #231f35;">
-            <h2>Пример заключения</h2>
-            <div class="inset-box" style="text-align:left; max-width:550px;">
+        <!-- Слайд 5: Пример заключения (LUNA) -->
+        <div class="slide" id="slide5" style="background: linear-gradient(145deg, #023859, #011C40);">
+            <h2 style="color: #54ACBF; text-shadow: -1px -1px 0 #023859, 3px 3px 0 #011C40;">
+                Пример заключения
+            </h2>
+            <div class="card" style="color: #A7EBF2; text-shadow: 1px 1px 0 #011C40;">
                 <p><strong>Кандидат:</strong> Анна И.</p>
                 <p><strong>Вакансия:</strong> Senior Python Developer</p>
                 <p><strong>Общий балл:</strong> 87/100</p>
-                <p><strong>Сильные стороны:</strong> 5 лет опыта, экспертиза в FastAPI, опыт командной разработки.</p>
-                <p><strong>Рекомендация:</strong> Пригласить на техническое интервью.</p>
+                <p><strong>Сильные стороны:</strong> 5 лет опыта, экспертиза в FastAPI</p>
+                <p><strong>Рекомендация:</strong> Пригласить на техническое интервью</p>
             </div>
         </div>
 
-        <!-- 7. Призыв к действию -->
-        <div class="slide" id="slide6" style="--slide-bg: #28223e;">
-            <h2>Готовы попробовать?</h2>
-            <div class="inset-box">
-                <p>Подключите AI‑заключения и сократите время найма вдвое.</p>
+        <!-- Слайд 6: Призыв (землистая палитра) -->
+        <div class="slide" id="slide6" style="background: linear-gradient(145deg, #80917D, #134B42);">
+            <h2 style="color: #EEA83B; text-shadow: 2px 2px 0 #134B42, 4px 4px 0 #CA763B;">
+                Готовы попробовать?
+            </h2>
+            <div class="card">
+                <p style="color: #EEA83B; text-shadow: 1px 1px 0 #134B42;">
+                    Подключите AI‑заключения и сократите время найма вдвое.
+                </p>
+                <a href="https://amusing-nexus-work-flow.base44.app/prompt-assessment" target="_blank" 
+                   style="display: inline-block; margin-top: 20px; padding: 12px 30px; background: #CA763B; color: #fff; border-radius: 40px; text-decoration: none; font-weight: 600; box-shadow: 0 6px 12px rgba(0,0,0,0.5);">
+                    Открыть демо
+                </a>
             </div>
-            <a href="https://amusing-nexus-work-flow.base44.app" target="_blank" class="project-link">
-                Открыть демо
-            </a>
         </div>
 
-        <!-- 8. Команда -->
-        <div class="slide" id="slide7" style="--slide-bg: #231f35;">
-            <h2>Команда проекта</h2>
+        <!-- Слайд 7: Команда (нейтральная тёмная база) -->
+        <div class="slide" id="slide7" style="background: #1c1c1c;">
+            <h2 style="color: #aaa; text-shadow: 1px 2px 0 #000, 3px 4px 8px black;">
+                Команда проекта
+            </h2>
             <div class="team-grid">
                 <div class="team-card">
                     <img src="ilyas.jpg" alt="Ильяс" class="team-photo">
@@ -429,7 +356,10 @@
             let isAnimating = false;
 
             const particleColors = [
-                '#1e1b2e', '#15121f', '#2b2540', '#f0a8c0', '#d9d0f0', '#f0eaff', '#8b9dc3', '#cbc3e8', '#28223e', '#231f35'
+                '#051F20', '#0B2B26', '#163832', '#235347', '#8EB69B',
+                '#011C40', '#023859', '#26658C', '#54ACBF', '#A7EBF2',
+                '#134B42', '#80917D', '#EEA83B', '#CA763B', '#AEBA8A',
+                '#2E2E2E', '#F4FF46', '#000000'
             ];
 
             function updateIndicator() {
@@ -441,7 +371,6 @@
                 if (targetIndex < 0 || targetIndex >= totalSlides) return;
 
                 isAnimating = true;
-
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
                 canvas.style.display = 'block';
