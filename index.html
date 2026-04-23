@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Marck+Script&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
-        /* Общие сбросы и базовые стили */
         * {
             margin: 0;
             padding: 0;
@@ -23,12 +22,10 @@
             overflow: hidden;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
+            background: #1c1c1c;
             position: relative;
-            background: #1c1c1c; /* фолбэк */
-            transition: background 0.5s ease;
         }
 
-        /* Каждый слайд задаст свой фон через переменные */
         #dissolve-canvas {
             position: fixed;
             top: 0;
@@ -62,11 +59,10 @@
             text-align: center;
             border-radius: 30px;
             padding: 40px;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
             visibility: hidden;
             opacity: 0;
+            transition: opacity 0.2s ease, visibility 0.2s ease;
             color: #fff;
-            /* Фон каждого слайда будет определяться палитрой */
         }
 
         .slide.active {
@@ -74,8 +70,7 @@
             opacity: 1;
         }
 
-        /* Каллиграфический шрифт для заголовков */
-        .slide h1, .slide h2, .slide .engraved {
+        .slide h1, .slide h2 {
             font-family: 'Marck Script', cursive;
             font-weight: 400;
             letter-spacing: 2px;
@@ -92,13 +87,6 @@
             margin-bottom: 25px;
         }
 
-        .slide p, .slide li {
-            font-size: 1.3em;
-            line-height: 1.6;
-            max-width: 600px;
-        }
-
-        /* Карточки контента */
         .card {
             background: rgba(0,0,0,0.25);
             border-radius: 24px;
@@ -107,9 +95,10 @@
             max-width: 650px;
             backdrop-filter: blur(4px);
             box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            font-size: 1.2em;
+            line-height: 1.6;
         }
 
-        /* Стили командного блока */
         .team-grid {
             display: flex;
             flex-wrap: wrap;
@@ -128,12 +117,9 @@
             box-shadow: 0 8px 16px rgba(0,0,0,0.4);
             transition: transform 0.2s;
         }
-        .team-card:hover {
-            transform: translateY(-6px);
-        }
+        .team-card:hover { transform: translateY(-6px); }
         .team-photo {
-            width: 100px;
-            height: 100px;
+            width: 100px; height: 100px;
             border-radius: 50%;
             object-fit: cover;
             border: 3px solid rgba(255,255,255,0.2);
@@ -147,10 +133,7 @@
             display: inline-block;
             margin-bottom: 4px;
         }
-        .team-role {
-            font-size: 0.9em;
-            color: #ccc;
-        }
+        .team-role { font-size: 0.9em; color: #ccc; }
 
         .controls {
             position: fixed;
@@ -171,12 +154,9 @@
             color: #fff;
             backdrop-filter: blur(10px);
             cursor: pointer;
-            transition: all 0.2s;
             letter-spacing: 0.5px;
         }
-        .btn:active {
-            background: rgba(255,255,255,0.2);
-        }
+        .btn:active { background: rgba(255,255,255,0.2); }
 
         .indicator {
             position: fixed;
@@ -189,7 +169,6 @@
             opacity: 0.7;
         }
 
-        /* Медиа-адаптив */
         @media (max-width: 600px) {
             .slide h1 { font-size: 3em; }
             .slide h2 { font-size: 2.2em; }
@@ -204,7 +183,7 @@
     <canvas id="dissolve-canvas"></canvas>
 
     <div class="slides-container">
-        <!-- Слайд 0: Вступление (палитра Gradient green) -->
+        <!-- Слайд 0: Титульный (Gradient green) -->
         <div class="slide active" id="slide0" style="background: linear-gradient(135deg, #051F20, #235347);">
             <h1 style="color: #8EB69B; text-shadow: 2px 2px 0 #051F20, 4px 4px 0 #163832, 6px 6px 10px black;">
                 AI‑заключения о кандидатах
@@ -216,7 +195,7 @@
             </div>
         </div>
 
-        <!-- Слайд 1: Проблема (палитра LUNA) -->
+        <!-- Слайд 1: Проблема (LUNA) -->
         <div class="slide" id="slide1" style="background: linear-gradient(145deg, #011C40, #023859);">
             <h2 style="color: #A7EBF2; text-shadow: -1px -1px 0 #023859, 3px 3px 0 #011C40, 6px 6px 12px black;">
                 Проблема HR сегодня
@@ -231,7 +210,7 @@
             </div>
         </div>
 
-        <!-- Слайд 2: Наше решение (палитра 1b0d0b76... землистая) -->
+        <!-- Слайд 2: Наше решение (землистая) -->
         <div class="slide" id="slide2" style="background: linear-gradient(145deg, #134B42, #80917D);">
             <h2 style="color: #EEA83B; text-shadow: 2px 2px 0 #134B42, 4px 4px 0 #CA763B, 8px 8px 12px black;">
                 Наше решение
@@ -243,7 +222,7 @@
             </div>
         </div>
 
-        <!-- Слайд 3: Как это работает (палитра Product look – жёлтый акцент) -->
+        <!-- Слайд 3: Как это работает (Product look) -->
         <div class="slide" id="slide3" style="background: #2E2E2E; box-shadow: inset 0 0 30px rgba(0,0,0,0.8);">
             <h2 style="color: #F4FF46; text-shadow: 0 2px 0 #000, 2px 4px 10px black;">
                 Как это работает
@@ -259,7 +238,7 @@
             </div>
         </div>
 
-        <!-- Слайд 4: Преимущества (снова зелёный градиент) -->
+        <!-- Слайд 4: Преимущества (зелёный) -->
         <div class="slide" id="slide4" style="background: linear-gradient(145deg, #0B2B26, #163832);">
             <h2 style="color: #8EB69B; text-shadow: 2px 2px 0 #051F20, 4px 4px 0 #0B2B26, 6px 6px 10px black;">
                 Преимущества
@@ -274,12 +253,12 @@
             </div>
         </div>
 
-        <!-- Слайд 5: Пример заключения (LUNA) -->
+        <!-- Слайд 5: Пример (LUNA) -->
         <div class="slide" id="slide5" style="background: linear-gradient(145deg, #023859, #011C40);">
             <h2 style="color: #54ACBF; text-shadow: -1px -1px 0 #023859, 3px 3px 0 #011C40;">
                 Пример заключения
             </h2>
-            <div class="card" style="color: #A7EBF2; text-shadow: 1px 1px 0 #011C40;">
+            <div class="card" style="text-align: left; color: #A7EBF2; text-shadow: 1px 1px 0 #011C40;">
                 <p><strong>Кандидат:</strong> Анна И.</p>
                 <p><strong>Вакансия:</strong> Senior Python Developer</p>
                 <p><strong>Общий балл:</strong> 87/100</p>
@@ -288,7 +267,7 @@
             </div>
         </div>
 
-        <!-- Слайд 6: Призыв (землистая палитра) -->
+        <!-- Слайд 6: Призыв (землистая) -->
         <div class="slide" id="slide6" style="background: linear-gradient(145deg, #80917D, #134B42);">
             <h2 style="color: #EEA83B; text-shadow: 2px 2px 0 #134B42, 4px 4px 0 #CA763B;">
                 Готовы попробовать?
@@ -304,7 +283,7 @@
             </div>
         </div>
 
-        <!-- Слайд 7: Команда (нейтральная тёмная база) -->
+        <!-- Слайд 7: Команда -->
         <div class="slide" id="slide7" style="background: #1c1c1c;">
             <h2 style="color: #aaa; text-shadow: 1px 2px 0 #000, 3px 4px 8px black;">
                 Команда проекта
@@ -345,6 +324,8 @@
         <button class="btn" id="nextBtn">Вперёд →</button>
     </div>
 
+    <!-- Локальный html2canvas (скачай и положи рядом) -->
+    <script src="html2canvas.min.js"></script>
     <script>
         (function() {
             const slides = document.querySelectorAll('.slide');
@@ -355,77 +336,106 @@
             const indicator = document.getElementById('indicator');
             let isAnimating = false;
 
-            const particleColors = [
-                '#051F20', '#0B2B26', '#163832', '#235347', '#8EB69B',
-                '#011C40', '#023859', '#26658C', '#54ACBF', '#A7EBF2',
-                '#134B42', '#80917D', '#EEA83B', '#CA763B', '#AEBA8A',
-                '#2E2E2E', '#F4FF46', '#000000'
-            ];
-
             function updateIndicator() {
                 indicator.textContent = `Слайд ${currentIndex + 1} / ${totalSlides}`;
             }
 
+            // Основная функция переключения с распадом
             function dissolveToNext(targetIndex) {
                 if (isAnimating || targetIndex === currentIndex) return;
                 if (targetIndex < 0 || targetIndex >= totalSlides) return;
 
+                // Если библиотека не загружена, просто переключаем без анимации
+                if (typeof html2canvas === 'undefined') {
+                    slides[currentIndex].classList.remove('active');
+                    slides[targetIndex].classList.add('active');
+                    currentIndex = targetIndex;
+                    updateIndicator();
+                    return;
+                }
+
                 isAnimating = true;
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-                canvas.style.display = 'block';
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                const fromSlide = slides[currentIndex];
 
-                const cx = canvas.width / 2;
-                const cy = canvas.height / 2;
-                const particles = [];
-                const count = 3000;
+                // Скрываем холст и захватываем слайд
+                canvas.style.display = 'none';
+                html2canvas(fromSlide, {
+                    scale: 1,
+                    useCORS: true,
+                    allowTaint: true,
+                    logging: false
+                }).then(captured => {
+                    // Показываем новый слайд мгновенно под холстом
+                    fromSlide.classList.remove('active');
+                    slides[targetIndex].classList.add('active');
 
-                for (let i = 0; i < count; i++) {
-                    const angle = Math.random() * Math.PI * 2;
-                    const speed = 2 + Math.random() * 8;
-                    const color = particleColors[Math.floor(Math.random() * particleColors.length)];
-                    const size = 2 + Math.random() * 6;
-                    particles.push({
-                        x: cx + (Math.random() - 0.5) * 200,
-                        y: cy + (Math.random() - 0.5) * 100,
-                        vx: Math.cos(angle) * speed,
-                        vy: Math.sin(angle) * speed,
-                        life: 1,
-                        decay: 0.01 + Math.random() * 0.03,
-                        color: color,
-                        size: size
-                    });
-                }
-
-                slides[currentIndex].classList.remove('active');
-                slides[targetIndex].classList.add('active');
-
-                function animate() {
+                    canvas.width = captured.width;
+                    canvas.height = captured.height;
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    let alive = false;
-                    particles.forEach(p => {
-                        p.x += p.vx;
-                        p.y += p.vy;
-                        p.life -= p.decay;
-                        if (p.life > 0) {
-                            alive = true;
-                            ctx.globalAlpha = p.life;
-                            ctx.fillStyle = p.color;
-                            ctx.fillRect(p.x, p.y, p.size, p.size);
+                    ctx.drawImage(captured, 0, 0);
+                    canvas.style.display = 'block';
+
+                    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    const particles = [];
+                    const step = 4; // размер ячейки (меньше – больше частиц)
+
+                    for (let y = 0; y < canvas.height; y += step) {
+                        for (let x = 0; x < canvas.width; x += step) {
+                            const px = Math.floor(x + step/2);
+                            const py = Math.floor(y + step/2);
+                            const i = (py * canvas.width + px) * 4;
+                            const r = imageData.data[i];
+                            const g = imageData.data[i+1];
+                            const b = imageData.data[i+2];
+                            const a = imageData.data[i+3];
+                            if (a < 20) continue;
+
+                            particles.push({
+                                x: px,
+                                y: py,
+                                color: `rgba(${r},${g},${b},${a/255})`,
+                                vx: (Math.random() - 0.5) * 12,
+                                vy: (Math.random() - 0.5) * 12 - 2,
+                                life: 1,
+                                decay: 0.015 + Math.random() * 0.03,
+                                size: step * (0.5 + Math.random() * 0.5)
+                            });
                         }
-                    });
-                    if (alive) {
-                        requestAnimationFrame(animate);
-                    } else {
-                        canvas.style.display = 'none';
-                        ctx.clearRect(0, 0, canvas.width, canvas.height);
-                        currentIndex = targetIndex;
-                        updateIndicator();
-                        isAnimating = false;
                     }
-                }
-                animate();
+
+                    function animate() {
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        let alive = false;
+                        particles.forEach(p => {
+                            p.x += p.vx;
+                            p.y += p.vy;
+                            p.life -= p.decay;
+                            if (p.life > 0) {
+                                alive = true;
+                                ctx.globalAlpha = p.life;
+                                ctx.fillStyle = p.color;
+                                ctx.fillRect(p.x, p.y, p.size, p.size);
+                            }
+                        });
+                        if (alive) {
+                            requestAnimationFrame(animate);
+                        } else {
+                            canvas.style.display = 'none';
+                            ctx.clearRect(0, 0, canvas.width, canvas.height);
+                            currentIndex = targetIndex;
+                            updateIndicator();
+                            isAnimating = false;
+                        }
+                    }
+                    animate();
+                }).catch(() => {
+                    // fallback при ошибке
+                    fromSlide.classList.remove('active');
+                    slides[targetIndex].classList.add('active');
+                    currentIndex = targetIndex;
+                    updateIndicator();
+                    isAnimating = false;
+                });
             }
 
             document.getElementById('nextBtn').addEventListener('click', () => dissolveToNext(currentIndex + 1));
