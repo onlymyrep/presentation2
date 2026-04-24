@@ -105,20 +105,21 @@
             padding-left: 20px;
         }
 
+        /* Увеличенные карточки команды */
         .team-grid {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 30px;
+            gap: 35px;
             margin-top: 30px;
-            max-width: 900px;
+            max-width: 1000px;
         }
 
         .team-card {
             background: rgba(0,0,0,0.35);
-            border-radius: 20px;
-            padding: 30px 20px 25px;
-            width: 180px;
+            border-radius: 24px;
+            padding: 35px 30px 30px;
+            width: 210px;                   /* увеличена ширина */
             backdrop-filter: blur(6px);
             text-align: center;
             box-shadow: 0 8px 20px rgba(0,0,0,0.5);
@@ -126,21 +127,25 @@
         }
         .team-card:hover { transform: translateY(-8px); }
         .team-photo {
-            width: 120px; height: 120px;
+            width: 140px;                   /* больше фото */
+            height: 140px;
             border-radius: 50%;
             object-fit: cover;
             border: 3px solid rgba(255,255,255,0.25);
-            margin-bottom: 15px;
+            margin-bottom: 18px;
         }
         .team-name {
-            font-size: 1.4rem;
+            font-size: 1.6rem;              /* крупнее имя */
             font-weight: 700;
             color: #fff;
             text-decoration: none;
             display: inline-block;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
         }
-        .team-role { font-size: 1rem; color: #b0c7b5; }
+        .team-role {
+            font-size: 1.1rem;              /* крупнее роль */
+            color: #b0c7b5;
+        }
 
         .controls {
             position: fixed;
@@ -180,8 +185,10 @@
         @media (max-width: 600px) {
             .slide { padding: 30px 5%; }
             .card { padding: 25px; font-size: 1.2rem; }
-            .team-card { width: 140px; padding: 20px 15px; }
-            .team-photo { width: 80px; height: 80px; }
+            .team-card { width: 160px; padding: 25px 15px; }
+            .team-photo { width: 100px; height: 100px; }
+            .team-name { font-size: 1.3rem; }
+            .team-role { font-size: 0.9rem; }
         }
     </style>
 </head>
@@ -290,7 +297,7 @@
             </div>
         </div>
 
-        <!-- Слайд 7: Команда -->
+        <!-- Слайд 7: Команда (увеличенные карточки) -->
         <div class="slide" id="slide7" style="background: linear-gradient(145deg, #051F20, #0B2B26);">
             <h2 style="color: #8EB69B; text-shadow: 2px 2px 0 #000, 6px 6px 0 #051F20, 10px 10px 15px black;">
                 Команда проекта
@@ -331,7 +338,6 @@
         <button class="btn" id="nextBtn">Вперёд →</button>
     </div>
 
-    <!-- Локальный html2canvas -->
     <script src="html2canvas.min.js"></script>
     <script>
         (function() {
@@ -380,7 +386,7 @@
 
                     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
                     const particles = [];
-                    const step = 6; // крупнее клетка → меньше частиц → быстрее
+                    const step = 8; // ещё крупнее клетка – меньше частиц, быстрее
 
                     for (let y = 0; y < canvas.height; y += step) {
                         for (let x = 0; x < canvas.width; x += step) {
@@ -397,11 +403,11 @@
                                 x: px,
                                 y: py,
                                 color: `rgba(${r},${g},${b},${a/255})`,
-                                vx: (Math.random() - 0.5) * 28,  // увеличена скорость разлёта
-                                vy: (Math.random() - 0.5) * 28 - 4,
+                                vx: (Math.random() - 0.5) * 36,   // максимальная скорость
+                                vy: (Math.random() - 0.5) * 36 - 5,
                                 life: 1,
-                                decay: 0.04 + Math.random() * 0.08, // быстрое угасание
-                                size: step * (0.7 + Math.random() * 0.5)
+                                decay: 0.06 + Math.random() * 0.1, // очень быстрое угасание
+                                size: step * (0.8 + Math.random() * 0.4)
                             });
                         }
                     }
