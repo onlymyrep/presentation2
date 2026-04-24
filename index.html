@@ -57,7 +57,7 @@
             justify-content: center;
             text-align: center;
             border-radius: 0;
-            padding: 60px 10%;
+            padding: 40px 8%;
             visibility: hidden;
             opacity: 0;
             transition: opacity 0.2s ease, visibility 0.2s ease;
@@ -69,40 +69,78 @@
             opacity: 1;
         }
 
+        /* Увеличенные, вдавленные заголовки */
         .slide h1, .slide h2 {
             font-family: 'Marck Script', cursive;
             font-weight: 400;
-            letter-spacing: 3px;
-            line-height: 1.2;
-            margin-bottom: 25px;
+            letter-spacing: 4px;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            /* Глубокая гравировка */
+            text-shadow: 3px 3px 0 #051F20,
+                         6px 6px 0 #0B2B26,
+                         9px 9px 15px black;
         }
 
         .slide h1 {
-            font-size: clamp(3rem, 10vw, 6rem);
+            font-size: clamp(4rem, 12vw, 7rem);
         }
 
         .slide h2 {
-            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-size: clamp(3rem, 9vw, 5.5rem);
         }
 
+        /* Карточка с контентом – крупнее текст */
         .card {
             background: rgba(0,0,0,0.3);
-            border-radius: 24px;
-            padding: 40px;
+            border-radius: 28px;
+            padding: 45px;
             margin: 0 auto;
-            max-width: 800px;
+            max-width: 850px;
             width: 100%;
             backdrop-filter: blur(8px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-            font-size: 1.6rem;
-            line-height: 1.6;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.7);
+            font-size: 2rem;            /* увеличено */
+            line-height: 1.5;
             text-align: left;
+            /* Вдавленный текст контента */
+            text-shadow: 2px 2px 0 #051F20, 4px 4px 0 #0B2B26;
         }
 
+        /* Единые стили для маркированных списков */
         .card ul, .card ol {
-            list-style-position: inside;
+            list-style: none;           /* убираем стандартные маркеры */
             text-align: left;
-            padding-left: 20px;
+            padding-left: 0;
+        }
+        .card ul li, .card ol li {
+            position: relative;
+            padding-left: 2em;
+            margin-bottom: 0.5em;
+        }
+        .card ul li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            font-weight: 700;
+            color: #8EB69B;
+            text-shadow: 1px 1px 0 #051F20;
+        }
+        /* Для нумерованного списка (шаги) сохраним цифры, но без стандартного оформления */
+        .card ol {
+            counter-reset: step-counter;
+        }
+        .card ol li {
+            counter-increment: step-counter;
+            padding-left: 2.5em;
+        }
+        .card ol li::before {
+            content: counter(step-counter) ".";
+            position: absolute;
+            left: 0;
+            font-weight: 700;
+            color: #8EB69B;
+            text-shadow: 1px 1px 0 #051F20;
         }
 
         /* Увеличенные карточки команды */
@@ -110,41 +148,47 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 35px;
-            margin-top: 30px;
-            max-width: 1000px;
+            gap: 30px;
+            margin-top: 40px;
+            max-width: 1100px;
         }
 
         .team-card {
-            background: rgba(0,0,0,0.35);
-            border-radius: 24px;
-            padding: 35px 30px 30px;
-            width: 210px;                   /* увеличена ширина */
+            background: rgba(0,0,0,0.4);
+            border-radius: 28px;
+            padding: 40px 30px 35px;
+            width: 230px;                /* ещё шире */
             backdrop-filter: blur(6px);
             text-align: center;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
             transition: transform 0.2s;
         }
-        .team-card:hover { transform: translateY(-8px); }
+        .team-card:hover { transform: translateY(-10px); }
         .team-photo {
-            width: 140px;                   /* больше фото */
-            height: 140px;
+            width: 150px;                /* крупнее фото */
+            height: 150px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid rgba(255,255,255,0.25);
-            margin-bottom: 18px;
+            border: 4px solid rgba(255,255,255,0.3);
+            margin-bottom: 20px;
         }
         .team-name {
-            font-size: 1.6rem;              /* крупнее имя */
+            font-size: 1.8rem;           /* крупнее имя */
             font-weight: 700;
             color: #fff;
             text-decoration: none;
             display: inline-block;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 0 #051F20;
+        }
+        .team-name:hover {
+            color: #8EB69B;
+            text-shadow: 0 0 15px rgba(142,182,155,0.8);
         }
         .team-role {
-            font-size: 1.1rem;              /* крупнее роль */
-            color: #b0c7b5;
+            font-size: 1.2rem;           /* крупнее роль */
+            color: #c3d9c9;
+            text-shadow: 1px 1px 0 #051F20;
         }
 
         .controls {
@@ -158,36 +202,40 @@
         }
 
         .btn {
-            background: rgba(0,0,0,0.4);
+            background: rgba(0,0,0,0.5);
             border: 1px solid rgba(255,255,255,0.2);
             border-radius: 50px;
-            padding: 15px 35px;
-            font-size: 1.1rem;
+            padding: 16px 40px;
+            font-size: 1.2rem;
             color: #e0f0e4;
             backdrop-filter: blur(12px);
             cursor: pointer;
             letter-spacing: 1px;
             transition: all 0.2s;
+            text-shadow: 1px 1px 0 #051F20;
         }
-        .btn:active { background: rgba(0,0,0,0.6); }
+        .btn:active { background: rgba(0,0,0,0.7); }
 
         .indicator {
             position: fixed;
-            bottom: 100px;
+            bottom: 105px;
             left: 50%;
             transform: translateX(-50%);
             color: #c3d9c9;
-            font-size: 1rem;
+            font-size: 1.1rem;
             z-index: 999;
             opacity: 0.8;
+            text-shadow: 1px 1px 0 #051F20;
         }
 
         @media (max-width: 600px) {
-            .slide { padding: 30px 5%; }
-            .card { padding: 25px; font-size: 1.2rem; }
+            .slide { padding: 25px 5%; }
+            .slide h1 { font-size: 3rem; }
+            .slide h2 { font-size: 2.5rem; }
+            .card { padding: 25px; font-size: 1.4rem; }
             .team-card { width: 160px; padding: 25px 15px; }
             .team-photo { width: 100px; height: 100px; }
-            .team-name { font-size: 1.3rem; }
+            .team-name { font-size: 1.4rem; }
             .team-role { font-size: 0.9rem; }
         }
     </style>
@@ -199,11 +247,9 @@
     <div class="slides-container">
         <!-- Слайд 0: Титульный -->
         <div class="slide active" id="slide0" style="background: linear-gradient(160deg, #051F20 0%, #235347 100%);">
-            <h1 style="color: #8EB69B; text-shadow: 3px 3px 0 #051F20, 6px 6px 0 #0B2B26, 10px 10px 15px black;">
-                AI‑заключения о кандидатах
-            </h1>
+            <h1>AI‑заключения о кандидатах</h1>
             <div class="card" style="text-align:center;">
-                <p style="color: #b8d9c5; text-shadow: 1px 1px 0 #051F20, 2px 2px 4px black; font-size: 1.8rem;">
+                <p style="color:#e0f2e8; font-size:2.2rem;">
                     Автоматические выводы на основе резюме, тестов и видеоинтервью — быстро, объективно, глубоко.
                 </p>
             </div>
@@ -211,38 +257,32 @@
 
         <!-- Слайд 1: Проблема -->
         <div class="slide" id="slide1" style="background: linear-gradient(145deg, #0B2B26, #163832);">
-            <h2 style="color: #8EB69B; text-shadow: -2px -2px 0 #051F20, 4px 4px 0 #0B2B26, 8px 8px 12px black;">
-                Проблема HR сегодня
-            </h2>
+            <h2>Проблема HR сегодня</h2>
             <div class="card">
-                <ul style="color: #c3e0cf; text-shadow: 1px 1px 0 #051F20; font-size: 1.7rem;">
-                    <li>• Сотни резюме на одну вакансию</li>
-                    <li>• Ручная оценка занимает часы</li>
-                    <li>• Субъективность и усталость рекрутера</li>
-                    <li>• Упущенные таланты из‑за скорости отбора</li>
+                <ul style="color:#d6efe0;">
+                    <li>Сотни резюме на одну вакансию</li>
+                    <li>Ручная оценка занимает часы</li>
+                    <li>Субъективность и усталость рекрутера</li>
+                    <li>Упущенные таланты из‑за скорости отбора</li>
                 </ul>
             </div>
         </div>
 
         <!-- Слайд 2: Решение -->
         <div class="slide" id="slide2" style="background: linear-gradient(145deg, #163832, #235347);">
-            <h2 style="color: #8EB69B; text-shadow: 2px 2px 0 #051F20, 5px 5px 0 #0B2B26, 8px 8px 15px black;">
-                Наше решение
-            </h2>
+            <h2>Наше решение</h2>
             <div class="card">
-                <p style="color: #d2ebdb; text-shadow: 1px 1px 0 #051F20; font-size: 1.7rem;">
+                <p style="color:#e0f2e8;">
                     AI‑ассистент анализирует все данные кандидата и формирует готовое заключение с баллами, сильными сторонами и рекомендациями.
                 </p>
             </div>
         </div>
 
-        <!-- Слайд 3: Как это работает -->
+        <!-- Слайд 3: Как это работает (нумерованный список) -->
         <div class="slide" id="slide3" style="background: linear-gradient(145deg, #051F20, #0B2B26);">
-            <h2 style="color: #8EB69B; text-shadow: 2px 2px 0 #000, 5px 5px 0 #051F20, 10px 10px 15px black;">
-                Как это работает
-            </h2>
-            <div class="card" style="text-align:left;">
-                <ol style="color: #bce0cd; text-shadow: 1px 1px 0 #051F20; font-size: 1.7rem; line-height: 2.2;">
+            <h2>Как это работает</h2>
+            <div class="card">
+                <ol style="color:#d6efe0;">
                     <li>Загрузка резюме, тестов, видео</li>
                     <li>AI извлекает навыки, опыт, компетенции</li>
                     <li>Сравнение с требованиями вакансии</li>
@@ -254,11 +294,9 @@
 
         <!-- Слайд 4: Преимущества -->
         <div class="slide" id="slide4" style="background: linear-gradient(145deg, #235347, #163832);">
-            <h2 style="color: #8EB69B; text-shadow: 2px 2px 0 #051F20, 6px 6px 0 #0B2B26, 10px 10px 15px black;">
-                Преимущества
-            </h2>
+            <h2>Преимущества</h2>
             <div class="card">
-                <ul style="color: #d0f0db; text-shadow: 1px 1px 0 #051F20; font-size: 1.7rem;">
+                <ul style="color:#d6efe0;">
                     <li>✔ Сокращение времени обработки на 80%</li>
                     <li>✔ Объективность и единые стандарты</li>
                     <li>✔ Выявление скрытых талантов</li>
@@ -269,10 +307,8 @@
 
         <!-- Слайд 5: Пример заключения -->
         <div class="slide" id="slide5" style="background: linear-gradient(145deg, #0B2B26, #051F20);">
-            <h2 style="color: #8EB69B; text-shadow: 2px 2px 0 #000, 6px 6px 0 #051F20, 10px 10px 15px black;">
-                Пример заключения
-            </h2>
-            <div class="card" style="color: #c7ecd7; text-shadow: 1px 1px 0 #051F20; font-size: 1.7rem; line-height: 2;">
+            <h2>Пример заключения</h2>
+            <div class="card" style="color:#e0f2e8; line-height:1.8;">
                 <p><strong>Кандидат:</strong> Анна И.</p>
                 <p><strong>Вакансия:</strong> Senior Python Developer</p>
                 <p><strong>Общий балл:</strong> 87/100</p>
@@ -283,15 +319,13 @@
 
         <!-- Слайд 6: Призыв к действию -->
         <div class="slide" id="slide6" style="background: linear-gradient(145deg, #163832, #235347);">
-            <h2 style="color: #8EB69B; text-shadow: 2px 2px 0 #051F20, 6px 6px 0 #0B2B26, 10px 10px 15px black;">
-                Готовы попробовать?
-            </h2>
+            <h2>Готовы попробовать?</h2>
             <div class="card" style="text-align:center;">
-                <p style="color: #e4f5ea; text-shadow: 1px 1px 0 #051F20; font-size: 1.8rem;">
+                <p style="color:#e4f5ea; font-size:2.4rem;">
                     Подключите AI‑заключения и сократите время найма вдвое.
                 </p>
                 <a href="https://amusing-nexus-work-flow.base44.app/prompt-assessment" target="_blank" 
-                   style="display: inline-block; margin-top: 30px; padding: 18px 40px; background: #8EB69B; color: #051F20; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 1.4rem; box-shadow: 0 8px 20px rgba(0,0,0,0.6), inset 0 -2px 0 rgba(0,0,0,0.3); letter-spacing: 1px;">
+                   style="display:inline-block; margin-top:35px; padding:20px 45px; background:#8EB69B; color:#051F20; border-radius:50px; text-decoration:none; font-weight:700; font-size:1.6rem; box-shadow:0 10px 25px rgba(0,0,0,0.7), inset 0 -3px 0 rgba(0,0,0,0.3); letter-spacing:1px;">
                     Открыть демо
                 </a>
             </div>
@@ -299,9 +333,7 @@
 
         <!-- Слайд 7: Команда (увеличенные карточки) -->
         <div class="slide" id="slide7" style="background: linear-gradient(145deg, #051F20, #0B2B26);">
-            <h2 style="color: #8EB69B; text-shadow: 2px 2px 0 #000, 6px 6px 0 #051F20, 10px 10px 15px black;">
-                Команда проекта
-            </h2>
+            <h2>Команда проекта</h2>
             <div class="team-grid">
                 <div class="team-card">
                     <img src="ilyas.jpg" alt="Ильяс" class="team-photo">
@@ -386,7 +418,7 @@
 
                     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
                     const particles = [];
-                    const step = 8; // ещё крупнее клетка – меньше частиц, быстрее
+                    const step = 8;
 
                     for (let y = 0; y < canvas.height; y += step) {
                         for (let x = 0; x < canvas.width; x += step) {
@@ -403,10 +435,10 @@
                                 x: px,
                                 y: py,
                                 color: `rgba(${r},${g},${b},${a/255})`,
-                                vx: (Math.random() - 0.5) * 36,   // максимальная скорость
+                                vx: (Math.random() - 0.5) * 36,
                                 vy: (Math.random() - 0.5) * 36 - 5,
                                 life: 1,
-                                decay: 0.06 + Math.random() * 0.1, // очень быстрое угасание
+                                decay: 0.06 + Math.random() * 0.1,
                                 size: step * (0.8 + Math.random() * 0.4)
                             });
                         }
