@@ -56,7 +56,7 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            border-radius: 0; /* Полноэкранные слайды без скругления */
+            border-radius: 0;
             padding: 60px 10%;
             visibility: hidden;
             opacity: 0;
@@ -209,10 +209,10 @@
             </h2>
             <div class="card">
                 <ul style="color: #c3e0cf; text-shadow: 1px 1px 0 #051F20; font-size: 1.7rem;">
-                    <li>Сотни резюме на одну вакансию</li>
-                    <li>Ручная оценка занимает часы</li>
-                    <li>Субъективность и усталость рекрутера</li>
-                    <li>Упущенные таланты из‑за скорости отбора</li>
+                    <li>• Сотни резюме на одну вакансию</li>
+                    <li>• Ручная оценка занимает часы</li>
+                    <li>• Субъективность и усталость рекрутера</li>
+                    <li>• Упущенные таланты из‑за скорости отбора</li>
                 </ul>
             </div>
         </div>
@@ -331,7 +331,7 @@
         <button class="btn" id="nextBtn">Вперёд →</button>
     </div>
 
-    <!-- Локальный html2canvas – положи файл в ту же папку -->
+    <!-- Локальный html2canvas -->
     <script src="html2canvas.min.js"></script>
     <script>
         (function() {
@@ -380,7 +380,7 @@
 
                     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
                     const particles = [];
-                    const step = 4; // размер клетки
+                    const step = 6; // крупнее клетка → меньше частиц → быстрее
 
                     for (let y = 0; y < canvas.height; y += step) {
                         for (let x = 0; x < canvas.width; x += step) {
@@ -397,11 +397,11 @@
                                 x: px,
                                 y: py,
                                 color: `rgba(${r},${g},${b},${a/255})`,
-                                vx: (Math.random() - 0.5) * 14,
-                                vy: (Math.random() - 0.5) * 14 - 3,
+                                vx: (Math.random() - 0.5) * 28,  // увеличена скорость разлёта
+                                vy: (Math.random() - 0.5) * 28 - 4,
                                 life: 1,
-                                decay: 0.015 + Math.random() * 0.03,
-                                size: step * (0.6 + Math.random() * 0.6)
+                                decay: 0.04 + Math.random() * 0.08, // быстрое угасание
+                                size: step * (0.7 + Math.random() * 0.5)
                             });
                         }
                     }
